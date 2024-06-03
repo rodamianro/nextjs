@@ -1,0 +1,16 @@
+services:
+  server:
+    image: rodamianro/util:nextjs
+    build:
+      context: .
+      target: ${ENVIRONMENT}
+    networks:
+      - net
+    ports:
+      - ${SERVER_PORT}:3000
+    volumes:
+      - .:/home/node/app
+    tty: true
+networks:
+  net:
+    driver: bridge
