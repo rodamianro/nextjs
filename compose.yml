@@ -3,13 +3,14 @@ services:
     image: rodamianro/util:nextjs
     build:
       context: .
-      target: ${ENVIRONMENT}
+      target: ${ENVIRONMENT:-develop}
     networks:
       - net
     ports:
-      - ${SERVER_PORT}:3000
+      - ${SERVER_PORT:-3000}:3000
     volumes:
-      - .:/home/node/app
+      - ./nextjs-dashboard:/home/node/app
+      - /home/node/app/node_modules
     tty: true
 networks:
   net:

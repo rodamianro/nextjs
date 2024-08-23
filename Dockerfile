@@ -1,9 +1,11 @@
-FROM node:19-alpine as base
+FROM node:20.17.0-alpine AS server
 WORKDIR /home/node/app
-COPY . .
-RUN mkdir -p /node_modules && chown -R node:node ./
-RUN npm install
+COPY ./nextjs-dashboard/package.json ./nextjs-dashboard/pnpm-lock.yaml ./
+RUN npm install -g pnpm && pnpm install
 
-FROM base as develop
-ENTRYPOINT [ "npm", "run" ]
+FROM server AS base
+COPY ./nextjs-dashboard .
+
+FROM base AS develop
+ENTRYPOINT [ "pnpm" ]
 CMD [ "dev" ]
